@@ -1,0 +1,37 @@
+@startuml
+ 
+'!include ../C4-PlantUML/C4_Container.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/
+ 
+!include ICONS/font-awesome-5/user_tie.puml
+ 
+'LAYOUT_AS_SKETCH()
+'LAYOUT_LEFT_RIGHT()
+LAYOUT_WITH_LEGEND()
+ 
+System_Ext(cc, "Contact Center", "Contact point, switches customer calls.")
+Person_Ext(manager, "Manager", "Makes a decision from statistics provided by CLOVA AiCall", "user_tie")
+ 
+System_Boundary(clova_ai_call, "CLOVA AiCall") {
+ 
+  Container(pa, "Protocol Adapter", "SIP, gRPC client", "Converts voice streams into supported format.")
+  Container(vsg, "Voice Streaming Gateway", "gRPC server", "Manages call sessions and handle voice streaming.")
+  Container(cic, "CIC", "CIC Protocol", "Processes AI requests")
+  Container(interface, "AiCall Interface", "Kafka, REST API", "Provides interfaces for AiCall console")
+  Container(console, "AiCall Console", "Web app", "Provides UI for retrieving statistics.")
+  ContainerDb(db, "Database", "Redis, MySQL", "Stores activities, events, and call information")
+       
+  Rel(cc, pa, "Forwards voice stream data to", "SIP trunk")
+  Rel_L(pa, vsg, "Forwards converted voice stream to", "gRPC call")
+ 
+  Rel(vsg, cic, "Requests voice recognition and processing corresponding works to", "REST/HTTPS 2.0")
+  Rel(vsg, interface, "Sends event log to", "REST API call")
+  Rel(manager, console, "Retrieves statistics from", "HTTP")
+  Rel(console, interface, "Queries statistic data from", "REST API call")
+ 
+  Rel_L(interface, db, "Reads from and writes to", "JDBC")
+}
+ 
+@enduml

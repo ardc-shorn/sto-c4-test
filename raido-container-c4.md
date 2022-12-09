@@ -13,7 +13,6 @@ sequenceDiagram
 ```
 
 ```plantuml
-@startuml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 ' uncomment the following line and comment the first to use locally
 ' !include C4_Container.puml
@@ -30,5 +29,4 @@ Person(SpUser, "ServicePoint User", )
 Rel(PublicUser, AppClient, "interact")
 Rel(SpUser, AppClient, "interact")
 Rel(AppClient, ApiSvc, "invoke")
-@enduml
 ```

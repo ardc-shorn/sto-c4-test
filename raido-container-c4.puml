@@ -1,30 +1,37 @@
 @startuml
+
+' load the C4 PlantUML template  
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+' for the databse shape `ContainerDb`
 !define ICONS https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/
-' uncomment the following line and comment the first to use locally
-' !include C4_Container.puml
-' LAYOUT_TOP_DOWN()
-' LAYOUT_AS_SKETCH()
+
+LAYOUT_TOP_DOWN()
 LAYOUT_WITH_LEGEND()
+
 title C4 Container diagram for Raido
 
 Person(PublicUser, "Public User", "[anonymous]")
 Person(SpUser, "ServicePoint User", "[OIDC authenticated]")
-Person(SpInt, "ServicePoint\nIntegration", "[api-key authenticated]")
+System_Ext(SpInt, "ServicePoint\nIntegration", "[api-key authenticated]")
+System_Ext(IdProvider, "ID Provider", "[Google / AAF / ORCiD]")
+System_Ext(LocalHdlSvc, "Local Handle Service", "[ARDC DevOps]")
 
 
 Container(AppClient, "app-client", "Raido UI React/SPA") 
-Container(PubWeb, "pub-web", "any web tech\ncurrently uses app-client") 
+Container(PubClient, "pub-client", "any web tech\ncurrently uses app-client") 
 
-Container(ApiSvc, "api-svc", "Spring REST API") 
+Container(ApiSvc, "api-svc", "REST API") 
 ContainerDb(db, "Database", "PostgreSQL")
  
 
-Rel(PublicUser, PubWeb, "interact", "in browser")
+Rel(PublicUser, PubClient, "interact", "in browser")
 Rel(SpUser, AppClient, "interact", "in browser")
-Rel(AppClient, ApiSvc, "invoke")
-Rel(PubWeb, ApiSvc, "invoke")
+Rel(SpUser, IdProvider, "identify", "HTTPS/OAuth2")
+Rel(AppClient, ApiSvc, "invoke", "HTTPS")
+Rel(PubClient, ApiSvc, "invoke", "HTTPS")
 Rel(SpInt, ApiSvc, "invoke", "HTTPS")
-Rel(ApiSvc, db, "read/write", "JDBC")
+Rel(ApiSvc, db, "read/write", "postgres:5432")
+Rel(ApiSvc, LocalHdlSvc, "mint", "HTTPS")
 @enduml
 

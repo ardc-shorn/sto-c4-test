@@ -1,37 +1,10 @@
-```mermaid
-sequenceDiagram
-    participant Alice
-    participant Bob
-    Alice->>John: Hello John, how are you?
-    loop Healthcheck
-        John->>John: Fight against hypochondria
-    end
-    Note right of John: Rational thoughts <br/>prevail!
-    John-->>Alice: Great!
-    John->>Bob: How about you?
-    Bob-->>John: Jolly good!
-```
 
-```mermaid
-C4Context
-    title C4 Container diagram for Raido
-    
-    Person(PublicUser, "Public User", "[anonymous]")
-    Person(SpUser, "ServicePoint User", "[OIDC authenticated]")
-    Person(SpInt, "ServicePoint\nIntegration", "[api-key authenticated]")
-    
-    
-    Container(AppClient, "app-client", "Raido UI React/SPA") 
-    Container(PubWeb, "pub-web", "any web tech\ncurrently uses app-client") 
-    
-    Container(ApiSvc, "api-svc", "Spring REST API") 
-    ContainerDb(db, "Database", "PostgreSQL")
-     
-    
-    Rel(PublicUser, PubWeb, "interact", "in browser")
-    Rel(SpUser, AppClient, "interact", "in browser")
-    Rel(AppClient, ApiSvc, "invoke")
-    Rel(PubWeb, ApiSvc, "invoke")
-    Rel(SpInt, ApiSvc, "invoke", "HTTPS")
-    Rel(ApiSvc, db, "read/write", "JDBC")
-```
+![PlantUML model](https://www.plantuml.com/plantuml/svg/5Oqx3W8n34HxJW47sBYXejgh1CSYaH9dPO_5zJ7LQ3wZTpgg8TQyFORoZ2PXyzw1orz4Lh_bCz3Z7Ix6Mo6AmdjHjSQ7zsrAZdtmyu0uQDMX-Hejerod4ykoN7_2ATfIVm00)
+
+This is a [C4 container diagram](https://en.wikipedia.org/wiki/C4_model), generated using [PlanUML](https://plantuml.com/).
+The source for this diagram is at [raido-container-c4.puml](./raido-container-c4.puml).
+It is dymacilly generated (from the `main` branch), via the plantuml.com public web service, see: https://stackoverflow.com/a/32771815/924597
+
+Note that we are only just learning about C4 modelling and the diagram above
+likely missues the C4 constructus - this diagram is very much a work in 
+progress.

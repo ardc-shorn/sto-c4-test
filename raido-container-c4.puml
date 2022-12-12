@@ -11,7 +11,7 @@ LAYOUT_WITH_LEGEND()
 
 title C4 Container diagram for Raido
 
-Person(PublicUser, "Public User", "[anonymous]")
+Person_Ext(PublicUser, "Public User", "[anonymous]")
 Person(SpUser, "ServicePoint User", "[OIDC authenticated]")
 System_Ext(SpInt, "ServicePoint\nIntegration", "[api-key authenticated]")
 System_Ext(IdProvider, "ID Provider", "[Google / AAF / ORCiD]")

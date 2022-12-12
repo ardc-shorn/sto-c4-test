@@ -1,5 +1,9 @@
 C4 model testacular
 
+This repo is just used for testing out stuff to do with diagramming, it's 
+for personal use one.
+
+
 ### Mermaid 
 * https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/creating-diagrams
 * https://mermaid-js.github.io/mermaid/#/c4c?id=c4-container-diagram-c4container

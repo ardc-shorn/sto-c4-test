@@ -14,7 +14,6 @@ sequenceDiagram
 
 ```mermaid
 C4Context
-    LAYOUT_TOP_DOWN()
     title C4 Container diagram for Raido
     
     Person(PublicUser, "Public User", "[anonymous]")
